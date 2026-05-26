@@ -1,0 +1,6 @@
+{
+  "name": "BASS COMPRE MAIS ACHADINHO",
+  "description": "Encontre as melhores ofertas e achadinhos da Shopee com o Bass Compre Mais! Curta seus favoritos, acesse links e envie sugestões.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
