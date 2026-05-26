@@ -21,6 +21,45 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     private val database = AppDatabase.getDatabase(application, viewModelScope)
     private val repository = ProductRepository(database.productDao())
 
+    // Blogger Comments Simulator by Product ID
+    private val _comments = MutableStateFlow<Map<Int, List<Pair<String, String>>>>(emptyMap())
+    val comments: StateFlow<Map<Int, List<Pair<String, String>>>> = _comments.asStateFlow()
+
+    init {
+        // Prepopulate with elegant, localized comments of varying authors
+        val mockComments = mapOf(
+            1 to listOf(
+                "Amanda Oliveira" to "Meninas, comprei esse relógio e chegou em menos de uma semana! O monitor de passos é super preciso! 😍💃",
+                "Carlos Eduardo" to "Uso pra fazer meus treinos diários e a bateria dura uns 5 dias direto. Recomendo muito pelo preço!",
+                "Beatriz Santos" to "Consegui usar o cupom BASSFIT e ganhei mais desconto ainda! Já quero comprar outro pro meu namorado."
+            ),
+            2 to listOf(
+                "Luana Faria" to "O cancelamento de ruído cancela o mundo real mesmo, perfeito pra estudar! 🎧✨",
+                "Marcos Vinicius" to "Grave muito forte e não machuca a orelha. Pelo preço achei que não fosse tão bom, mas me surpreendeu dms.",
+                "Juliana Paes" to "Comprem sem medo meninas! É o mesmo fone que as blogueiras gringas no TikTok usam kkkkk amei"
+            ),
+            3 to listOf(
+                "Mariana Costa" to "O efeito de luz imitando fogo é maravilhoso à noite, deixa o quarto super aconchegante 🔥❤️",
+                "Felipe Alencar" to "Coloquei essência de capim limão e a casa toda tá cheirosa. Virou meu item de decoração favorito.",
+                "Renata Souza" to "Cupom FLAME10 funcionando certinho, cupom milagroso rsrs"
+            ),
+            4 to listOf(
+                "Tati Pinheiro" to "Coube TODAS as minhas maquiagens e sobrou espaço. O fato de girar facilita demais na correria pra se arrumar.",
+                "Sofia Martins" to "Gira perfeitamente bem, material bem resistente e grosso. Nota 10!"
+            )
+        )
+        _comments.value = mockComments
+    }
+
+    fun addComment(productId: Int, author: String, text: String) {
+        if (text.isBlank()) return
+        val current = _comments.value.toMutableMap()
+        val list = current[productId]?.toMutableList() ?: mutableListOf()
+        list.add(author.ifBlank { "Anônimo" } to text)
+        current[productId] = list
+        _comments.value = current
+    }
+
     // SharedPreferences for Affiliate settings
     private val sharedPrefs = application.getSharedPreferences("achadinhos_prefs", Context.MODE_PRIVATE)
 
@@ -80,6 +119,7 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
             val matchCategory = when (category) {
                 "Todos" -> true
                 "Favoritos" -> product.isLiked
+                "Destaques" -> product.isFeatured
                 else -> product.category.equals(category, ignoreCase = true)
             }
             val matchQuery = if (query.isEmpty()) {

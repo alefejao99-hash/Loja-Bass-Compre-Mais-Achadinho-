@@ -202,62 +202,73 @@ fun BrandHeroHeader(
     val siteUrl by viewModel.siteUrl.collectAsStateWithLifecycle()
     
     var showEditPrefsDialog by remember { mutableStateOf(false) }
+    var showBioDialog by remember { mutableStateOf(false) }
     
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                brush = Brush.horizontalGradient(
-                    colors = listOf(DarkSurface, DarkSurfaceElevated)
+                brush = Brush.verticalGradient(
+                    colors = listOf(DarkSurface, DarkBackground)
                 )
             )
             .padding(top = 16.dp, bottom = 12.dp, start = 16.dp, end = 16.dp)
     ) {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            
+            // BLOGGER PLATFORM NAVIGATION TOP HEADER
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Column {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
+                // Blogger Emblem Signature & App Title
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Blogger Classic Rounded B Icon Symbol
+                    Box(
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(ShopeeOrange),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(ShopeeOrange),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ShoppingCart,
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(18.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "BASS COMPRE MAIS",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = TextPrimary,
-                                letterSpacing = 1.sp
-                            )
+                            text = "B",
+                            color = Color.White,
+                            fontWeight = FontWeight.Black,
+                            fontSize = 22.sp,
+                            modifier = Modifier.offset(y = (-1).dp)
                         )
                     }
-
-                    Text(
-                        text = "ACHADINHOS DA SHOPEE",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Black,
-                            color = ShopeeOrange,
-                            letterSpacing = 0.5.sp
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            text = "BLOGGER DE ACHADINHOS",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Black,
+                                color = TextPrimary,
+                                letterSpacing = 1.2.sp
+                            )
                         )
-                    )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .size(6.dp)
+                                    .clip(CircleShape)
+                                    .background(SoftGreen)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "site de divulgação ativo",
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = SoftGreen
+                            )
+                        }
+                    }
                 }
 
+                // Blogger Configurations and Settings Icon Button
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(
                         onClick = { showEditPrefsDialog = true },
@@ -274,103 +285,207 @@ fun BrandHeroHeader(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = ShopeeDarkOrange.copy(alpha = 0.15f)),
+                        colors = CardDefaults.cardColors(containerColor = ShopeeLightOrange.copy(alpha = 0.12f)),
                         shape = RoundedCornerShape(8.dp),
-                        border = BorderStroke(1.dp, ShopeeOrange.copy(alpha = 0.3f))
+                        border = BorderStroke(1.dp, ShopeeOrange.copy(alpha = 0.25f))
                     ) {
                         Text(
-                            text = "PARCEIRO",
+                            text = "TEMPLATE PREMIUM",
                             color = ShopeeOrange,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 11.sp,
+                            fontSize = 9.sp,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // Stats Badges
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            // BLOGGER AUTHOR PROFILE CARD WIDGET (Classic "Quem Sou Eu" blogger sidebar element)
+            Card(
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                shape = RoundedCornerShape(16.dp),
+                border = BorderStroke(1.dp, DarkCardBorder),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                StatusBadge(
-                    imageVector = Icons.Default.Favorite,
-                    color = HeartRed,
-                    label = "$totalLikes curtidas"
-                )
-                StatusBadge(
-                    imageVector = Icons.Default.ThumbUp,
-                    color = AccentAmber,
-                    label = "$totalClicks cliques oficiais"
-                )
-                // ID Badge
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = ShopeeOrange.copy(alpha = 0.12f)),
-                    shape = RoundedCornerShape(20.dp),
-                    border = BorderStroke(1.dp, ShopeeOrange.copy(alpha = 0.3f)),
-                    modifier = Modifier.clickable { showEditPrefsDialog = true }
-                ) {
+                Column(modifier = Modifier.padding(14.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null,
-                            tint = ShopeeOrange,
-                            modifier = Modifier.size(13.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "ID: $affiliateId",
-                            color = Color.White,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            // Blogger Avatar Icon Circle with colorful orange glow
+                            Box(
+                                modifier = Modifier
+                                    .size(42.dp)
+                                    .clip(CircleShape)
+                                    .background(
+                                        brush = Brush.sweepGradient(
+                                            colors = listOf(ShopeeOrange, AccentAmber, ShopeeDarkOrange)
+                                        )
+                                    )
+                                    .padding(2.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .clip(CircleShape)
+                                        .background(DarkSurface),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Person,
+                                        contentDescription = "Autor",
+                                        tint = ShopeeOrange,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                    text = "M4GN4T4M0DZ (Autor)",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    color = TextPrimary
+                                )
+                                Text(
+                                    text = "Blogger Oficial da Shopee",
+                                    fontSize = 11.sp,
+                                    color = TextSecondary
+                                )
+                            }
+                        }
+
+                        // Info toggle button
+                        IconButton(
+                            onClick = { showBioDialog = true },
+                            modifier = Modifier.size(32.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Info,
+                                contentDescription = "Ver Informações",
+                                tint = AccentAmber,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "Compartilhando ofertas testadas e cupons ativos da Shopee para economizar de verdade. Todos os links gerados já embutem o ID $affiliateId!",
+                        fontSize = 12.sp,
+                        color = TextSecondary,
+                        lineHeight = 17.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Divider(color = Color.White.copy(alpha = 0.05f), thickness = 1.dp)
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Social links rows and stats
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Quick channels buttons (Telegram, WhatsApp shortcuts commonly hosted on Blogger templates)
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            // Link Telegram Broadcast
+                            Row(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.White.copy(alpha = 0.05f))
+                                    .clickable {
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/achadinhos"))
+                                        try { context.startActivity(intent) } catch (e: Exception) {
+                                            Toast.makeText(context, "Telegram temporariamente indisponível", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    .padding(horizontal = 8.dp, vertical = 5.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Send,
+                                    contentDescription = null,
+                                    tint = Color(0xFF29B6F6),
+                                    modifier = Modifier.size(11.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(text = "Telegram", fontSize = 10.sp, color = TextPrimary)
+                            }
+
+                            // Link WhatsApp Group
+                            Row(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.White.copy(alpha = 0.05f))
+                                    .clickable {
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://chat.whatsapp.com"))
+                                        try { context.startActivity(intent) } catch (e: Exception) {
+                                            Toast.makeText(context, "Grupo WhatsApp temporariamente indisponível", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    .padding(horizontal = 8.dp, vertical = 5.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(6.dp)
+                                        .clip(CircleShape)
+                                        .background(SoftGreen)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(text = "Grupo Zap", fontSize = 10.sp, color = TextPrimary)
+                            }
+                        }
+
+                        // Compact stats
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(
+                                text = "❤️ $totalLikes",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = HeartRed
+                            )
+                            Text(
+                                text = "🖱️ $totalClicks Cliques",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = AccentAmber
+                            )
+                        }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Beautiful mini-banner to share Web Site
+            // Beautiful mini-banner to share and copy the Web Site
             Card(
                 colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
-                border = BorderStroke(1.dp, Color.White.copy(alpha = 0.08f)),
+                border = BorderStroke(1.dp, Color.White.copy(alpha = 0.05f)),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
+                        .padding(10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(
-                                modifier = Modifier
-                                    .size(8.dp)
-                                    .clip(CircleShape)
-                                    .background(SoftGreen)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "SITE DE DIVULGAÇÃO ATIVO",
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = SoftGreen,
-                                letterSpacing = 0.5.sp
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Seu parceiro Shopee em formato de site!",
+                            text = "ENDEREÇO DA VITRINE (SITE DO BLOG)",
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.Black,
+                            color = ShopeeOrange,
+                            letterSpacing = 0.5.sp
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = siteUrl,
                             fontSize = 11.sp,
                             color = TextSecondary,
                             maxLines = 1,
@@ -407,28 +522,89 @@ fun BrandHeroHeader(
                         // Copy Site URL Button
                         Button(
                             onClick = {
-                                val textToCopy = "Olá! Conheça a minha vitrine oficial de achadinhos da Shopee com ofertas incríveis selecionadas por mim! Acesse agora: $siteUrl"
+                                val textToCopy = "Olá! Conheça a minha vitrine oficial de achadinhos da Shopee estilo Blogger com ofertas incríveis selecionadas por mim! Acesse agora: $siteUrl"
                                 copyToClipboard(context, textToCopy, "Link da Vitrine copiado para divulgação! 🚀")
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = SoftGreen),
                             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp),
-                            modifier = Modifier.height(32.dp),
+                            modifier = Modifier.height(30.dp),
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Share,
                                 contentDescription = null,
                                 tint = Color.White,
-                                modifier = Modifier.size(12.dp)
+                                modifier = Modifier.size(11.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "Divulgar",
-                                fontSize = 11.sp,
+                                text = "Divulgar Blog",
+                                fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
                             )
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    // Informações / Sobre o Blogger Modal Dialog
+    if (showBioDialog) {
+        Dialog(onDismissRequest = { showBioDialog = false }) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .border(1.dp, ShopeeOrange.copy(alpha = 0.3f), RoundedCornerShape(20.dp)),
+                colors = CardDefaults.cardColors(containerColor = DarkSurface),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(CircleShape)
+                            .background(ShopeeOrange.copy(alpha = 0.15f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "B",
+                            color = ShopeeOrange,
+                            fontWeight = FontWeight.Black,
+                            fontSize = 32.sp
+                        )
+                    }
+
+                    Text(
+                        text = "Sobre o Afiliado Blogger",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = TextPrimary
+                    )
+
+                    Text(
+                        text = "Este aplicativo simula um portal de achadinhos no formato do Blogger. Todas as postagens representam 'artigos' de promoção na vitrine.\n\n" +
+                                "Ao clicar nos botões de redirecionamento, seu ID de Afiliado ($affiliateId) é injetado automaticamente nos links de compra, garantindo a comissão sobre as vendas!\n\n" +
+                                "Você pode reconfigurar o ID e o link da sua vitrine clicando no ícone de ferramentinhas no topo.",
+                        fontSize = 13.sp,
+                        color = TextSecondary,
+                        lineHeight = 18.sp,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+
+                    Button(
+                        onClick = { showBioDialog = false },
+                        colors = ButtonDefaults.buttonColors(containerColor = ShopeeOrange),
+                        modifier = Modifier.fillMaxWidth().height(42.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("Entendi, fechar!")
                     }
                 }
             }
@@ -615,7 +791,7 @@ fun CategorySelectorBar(
     selectedCategory: String,
     onCategorySelected: (String) -> Unit
 ) {
-    val categories = listOf("Todos", "Favoritos", "Eletrônicos", "Casa & Cozinha", "Beleza", "Outros")
+    val categories = listOf("Todos", "Destaques", "Favoritos", "Eletrônicos", "Casa & Cozinha", "Beleza", "Outros")
 
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -625,11 +801,16 @@ fun CategorySelectorBar(
         items(categories) { category ->
             val isSelected = selectedCategory == category
             val isFavoritoTab = category == "Favoritos"
+            val isDestaqueTab = category == "Destaques"
 
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = when {
-                        isSelected -> if (isFavoritoTab) HeartRed else ShopeeOrange
+                        isSelected -> when {
+                            isFavoritoTab -> HeartRed
+                            isDestaqueTab -> AccentAmber
+                            else -> ShopeeOrange
+                        }
                         else -> DarkSurfaceElevated
                     }
                 ),
@@ -639,6 +820,7 @@ fun CategorySelectorBar(
                     color = when {
                         isSelected -> Color.Transparent
                         isFavoritoTab -> HeartRed.copy(alpha = 0.4f)
+                        isDestaqueTab -> AccentAmber.copy(alpha = 0.4f)
                         else -> DarkCardBorder
                     }
                 ),
@@ -655,6 +837,14 @@ fun CategorySelectorBar(
                             imageVector = Icons.Default.Favorite,
                             contentDescription = null,
                             tint = if (isSelected) Color.White else HeartRed,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                    } else if (isDestaqueTab) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = null,
+                            tint = if (isSelected) Color.White else AccentAmber,
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -679,12 +869,17 @@ fun ProductCard(
 ) {
     val context = LocalContext.current
     var isDescExpanded by remember { mutableStateOf(false) }
+    var showComments by remember { mutableStateOf(false) }
+    var commentInputText by remember { mutableStateOf("") }
+    var commenterName by remember { mutableStateOf("") }
 
     val isGeneratingCopyMap by viewModel.isGeneratingCopy.collectAsStateWithLifecycle()
     val generatedCopysMap by viewModel.generatedCopys.collectAsStateWithLifecycle()
+    val commentsMap by viewModel.comments.collectAsStateWithLifecycle()
 
     val isAIActive = isGeneratingCopyMap == product.id
     val readyAICopy = generatedCopysMap[product.id]
+    val commentsList = commentsMap[product.id] ?: emptyList()
 
     // Local animated scale for Liking heart
     var iconClickedState by remember { mutableStateOf(false) }
@@ -768,9 +963,53 @@ fun ProductCard(
                 }
             }
 
+            // Blogger Meta Info Header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Mini Author Avatar Icon
+                Box(
+                    modifier = Modifier
+                        .size(18.dp)
+                        .clip(CircleShape)
+                        .background(ShopeeOrange.copy(alpha = 0.15f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "M",
+                        color = ShopeeOrange,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 10.sp
+                    )
+                }
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = "Postado por M4GN4T4M0DZ",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextSecondary
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Box(
+                    modifier = Modifier
+                        .size(3.dp)
+                        .clip(CircleShape)
+                        .background(TextMuted)
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = "Artigo #${product.id}",
+                    fontSize = 11.sp,
+                    color = TextMuted
+                )
+            }
+
             // Product Details and Copy
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
             ) {
                 // Title and Featured Icon
                 Row(
@@ -825,7 +1064,7 @@ fun ProductCard(
                         .clickable { isDescExpanded = !isDescExpanded }
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 // Pricing Row
                 Row(
@@ -900,21 +1139,20 @@ fun ProductCard(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(14.dp))
-
-                Divider(color = DarkCardBorder, thickness = 1.dp)
-
                 Spacer(modifier = Modifier.height(12.dp))
+                Divider(color = DarkCardBorder, thickness = 1.dp)
+                Spacer(modifier = Modifier.height(10.dp))
 
-                // Action controls row (Like, AI generator, Copy details, and Redirect button)
+                // Action controls row (Like, comments, AI copy, Share and Redirect button)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Likes and Clicks summary
+                    // Likes, comments, Share, AI panel
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         // Like heart button
                         IconButton(
@@ -922,19 +1160,44 @@ fun ProductCard(
                                 iconClickedState = true
                                 viewModel.toggleLike(product.id)
                             },
-                            modifier = Modifier.testTag("like_button_${product.id}")
+                            modifier = Modifier.testTag("like_button_${product.id}").size(34.dp)
                         ) {
                             Icon(
                                 imageVector = if (product.isLiked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = "Curtir",
                                 tint = if (product.isLiked) HeartRed else TextSecondary,
                                 modifier = Modifier
-                                    .size(24.dp)
-                                    .size(24.dp * heartScale) // spring anim scaling
+                                    .size(20.dp)
+                                    .size(20.dp * heartScale) // spring anim scaling
                             )
                         }
 
-                        // Copy Link / Offer Button
+                        // Comment toggle counter button
+                        IconButton(
+                            onClick = { showComments = !showComments },
+                            modifier = Modifier.size(34.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Send,
+                                    contentDescription = "Comentários",
+                                    tint = if (showComments) ShopeeOrange else TextSecondary,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(3.dp))
+                                Text(
+                                    text = "${commentsList.size}",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (showComments) ShopeeOrange else TextSecondary
+                                )
+                            }
+                        }
+
+                        // Copy Link / Share Button
                         val currentAffiliateId by viewModel.affiliateId.collectAsStateWithLifecycle()
                         IconButton(
                             onClick = {
@@ -942,12 +1205,13 @@ fun ProductCard(
                                 val messageStr = "🔥 CORRE! ${product.title} por apenas R$ ${String.format("%.2f", product.price)} na Shopee! Garanta o seu aqui: $affiliateLink"
                                 copyToClipboard(context, messageStr, "Link do Achadinho copiado para compartilhar!")
                             },
-                            modifier = Modifier.testTag("share_button_${product.id}")
+                            modifier = Modifier.testTag("share_button_${product.id}").size(34.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Share,
                                 contentDescription = "Compartilhar",
-                                tint = TextSecondary
+                                tint = TextSecondary,
+                                modifier = Modifier.size(18.dp)
                             )
                         }
 
@@ -960,11 +1224,11 @@ fun ProductCard(
                                     viewModel.clearCopy(product.id)
                                 }
                             },
-                            modifier = Modifier.testTag("ai_helper_button_${product.id}")
+                            modifier = Modifier.testTag("ai_helper_button_${product.id}").size(34.dp)
                         ) {
                             if (isAIActive) {
                                 CircularProgressIndicator(
-                                    modifier = Modifier.size(22.dp),
+                                    modifier = Modifier.size(16.dp),
                                     strokeWidth = 2.dp,
                                     color = ShopeeOrange
                                 )
@@ -972,7 +1236,8 @@ fun ProductCard(
                                 Icon(
                                     imageVector = Icons.Default.Star,
                                     contentDescription = "Gerador de Copy IA",
-                                    tint = if (readyAICopy != null) ShopeeOrange else TextSecondary
+                                    tint = if (readyAICopy != null) ShopeeOrange else TextSecondary,
+                                    modifier = Modifier.size(18.dp)
                                 )
                             }
                         }
@@ -982,12 +1247,14 @@ fun ProductCard(
                             onClick = {
                                 viewModel.deleteProduct(product)
                                 Toast.makeText(context, "Achadinho removido", Toast.LENGTH_SHORT).show()
-                            }
+                            },
+                            modifier = Modifier.size(34.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
                                 contentDescription = "Excluir Achadinho",
-                                tint = TextSecondary.copy(alpha = 0.5f)
+                                tint = TextSecondary.copy(alpha = 0.5f),
+                                modifier = Modifier.size(18.dp)
                             )
                         }
                     }
@@ -997,22 +1264,22 @@ fun ProductCard(
                         onClick = onProductClick,
                         modifier = Modifier
                             .testTag("buy_button_${product.id}")
-                            .height(42.dp),
+                            .height(34.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = ShopeeOrange),
-                        shape = RoundedCornerShape(20.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+                        shape = RoundedCornerShape(18.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.ShoppingCart,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(13.dp)
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "Ir pro Link",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
+                            fontSize = 11.sp,
                             color = Color.White
                         )
                     }
@@ -1030,7 +1297,7 @@ fun ProductCard(
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 16.dp)
+                            .padding(top = 12.dp)
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Row(
@@ -1131,6 +1398,166 @@ fun ProductCard(
                                     lineHeight = 17.sp,
                                     modifier = Modifier.testTag("ai_copy_text")
                                 )
+                            }
+                        }
+                    }
+                }
+
+                // BLOGGER COMMENTS CONTAINER PANEL
+                AnimatedVisibility(
+                    visible = showComments,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                ) {
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.05f)),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            // Header
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "COMENTÁRIOS DO ARTIGO (${commentsList.size})",
+                                    fontWeight = FontWeight.Black,
+                                    fontSize = 11.sp,
+                                    color = ShopeeOrange,
+                                    letterSpacing = 0.5.sp
+                                )
+                                Text(
+                                    text = "Moderação ativa",
+                                    fontSize = 9.sp,
+                                    color = SoftGreen,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                            
+                            Spacer(modifier = Modifier.height(8.dp))
+                            
+                            // Comment Thread
+                            if (commentsList.isEmpty()) {
+                                Text(
+                                    text = "Seja o primeiro a comentar neste achado! 🗣️",
+                                    color = TextMuted,
+                                    fontSize = 11.sp,
+                                    modifier = Modifier.padding(vertical = 8.dp)
+                                )
+                            } else {
+                                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                    commentsList.forEach { (author, msg) ->
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.Top
+                                        ) {
+                                            // Mini Initial Avatar Box
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(24.dp)
+                                                    .clip(CircleShape)
+                                                    .background(Color.White.copy(alpha = 0.08f)),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Text(
+                                                    text = author.take(1).uppercase(),
+                                                    color = TextSecondary,
+                                                    fontSize = 10.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Column {
+                                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                                    Text(
+                                                        text = author,
+                                                        fontWeight = FontWeight.Bold,
+                                                        fontSize = 12.sp,
+                                                        color = TextPrimary
+                                                    )
+                                                    Spacer(modifier = Modifier.width(6.dp))
+                                                    Text(
+                                                        text = "• Leitor",
+                                                        fontSize = 9.sp,
+                                                        color = TextMuted
+                                                    )
+                                                }
+                                                Spacer(modifier = Modifier.height(2.dp))
+                                                Text(
+                                                    text = msg,
+                                                    fontSize = 12.sp,
+                                                    color = TextSecondary,
+                                                    lineHeight = 16.sp
+                                                )
+                                            }
+                                        }
+                                        Divider(color = Color.White.copy(alpha = 0.03f), thickness = 0.5.dp)
+                                    }
+                                }
+                            }
+                            
+                            Spacer(modifier = Modifier.height(12.dp))
+                            
+                            // Send comment input form
+                            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    // Name Field
+                                    OutlinedTextField(
+                                        value = commenterName,
+                                        onValueChange = { commenterName = it },
+                                        placeholder = { Text("Nome...", fontSize = 11.sp, color = TextMuted) },
+                                        colors = outlinedTextFieldColors(),
+                                        singleLine = true,
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .height(40.dp),
+                                        textStyle = LocalTextStyle.current.copy(fontSize = 11.sp, color = TextPrimary)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    // Text Field
+                                    OutlinedTextField(
+                                        value = commentInputText,
+                                        onValueChange = { commentInputText = it },
+                                        placeholder = { Text("Comentar...", fontSize = 11.sp, color = TextMuted) },
+                                        colors = outlinedTextFieldColors(),
+                                        singleLine = true,
+                                        modifier = Modifier
+                                            .weight(2f)
+                                            .height(40.dp),
+                                        textStyle = LocalTextStyle.current.copy(fontSize = 11.sp, color = TextPrimary)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    // Send Button
+                                    IconButton(
+                                        onClick = {
+                                            if (commentInputText.isNotBlank()) {
+                                                val author = commenterName.trim().ifBlank { "Anônimo" }
+                                                viewModel.addComment(product.id, author, commentInputText.trim())
+                                                commentInputText = ""
+                                                Toast.makeText(context, "Comentário publicado! 🎉", Toast.LENGTH_SHORT).show()
+                                            }
+                                        },
+                                        modifier = Modifier
+                                            .size(36.dp)
+                                            .clip(CircleShape)
+                                            .background(ShopeeOrange)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Send,
+                                            contentDescription = "Enviar",
+                                            tint = Color.White,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
